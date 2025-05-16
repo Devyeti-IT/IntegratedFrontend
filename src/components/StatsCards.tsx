@@ -9,8 +9,8 @@ export default function StatsCards() {
   return (
     <section className="stats">
       {stats.map(({ icon, label, value, error }) => (
-        <div className="card" key={label}>
-          <i className={`card-icon ${icon}`} />
+        <div className="dashboard-card" key={label}>
+          <i className={`dashboard-card-icon ${icon}`} />
           <h3>{label}</h3>
           <p className={error ? "error" : ""}>{value}</p>
         </div>

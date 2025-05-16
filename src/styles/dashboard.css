@@ -132,47 +132,49 @@ header h1 {
 /* === Stats Cards === */
 .stats {
   display: grid;
+  align-items: center;
+  justify-content: center;
   grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
   gap: 1rem;
   margin-bottom: 2rem;
 }
 
-.card {
-  background-color: #fff;
-  width: 100%;
-  height: auto;
+.dashboard-card {
+  background: #fff;
   border-radius: 10px;
-  box-shadow: 0 1px 8px rgba(0, 0, 0, 0.1);
-  padding: 1.2rem 1rem;
+  width: 75%;
+  height: 90%;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+  padding: 1.5rem 18px 2rem;
   text-align: center;
   transition: box-shadow 0.2s ease;
 }
 
-.card:hover {
+.dashboard-card:hover {
   box-shadow: 0 4px 15px rgba(46, 125, 50, 0.3);
 }
 
-.card-icon {
-  font-size: 36px;
+.dashboard-card-icon {
+  font-size: 28px;
   color: #2e7d32;
   margin-bottom: 0.5rem;
 }
 
-.card h3 {
+.dashboard-card h3 {
   font-size: 16px;
   margin-bottom: 0.25rem;
   color: #333;
   font-weight: 700;
 }
 
-.card p {
-  font-size: 22px;
+.dashboard-card p {
+  font-size: 26px;
   margin: 0;
   font-weight: 600;
   color: #2e7d32;
 }
 
-.card p.error {
+.dashboard-card p.error {
   color: #d32f2f;
 }
 

@@ -3,7 +3,7 @@ import LoginForm from "../components/LoginForm";
 
 const LoginPage: React.FC = () => {
   return (
-    <div style={{ display: "flex", height: "100vh", justifyContent: "center", alignItems: "center", background: "#f4f6f8" }}>
+    <div className="container page-wrapper">
       <LoginForm />
     </div>
   );
