@@ -1,19 +1,27 @@
+// src/components/LoginForm.tsx (or wherever your file is)
 import React, { useState, type FormEvent } from 'react';
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/yetiAirlinesLogo.png';
+import { loginUser } from '../api/api'; // Import the loginUser API function
 
 const LoginForm: React.FC = () => {
   const [userId, setUserId] = useState<string>('');
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [error, setError] = useState<string | null>(null);
   const navigate = useNavigate();
 
-  const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Implement your login logic here
-    console.log({ userId, username, password });
-    // On successful login, navigate to dashboard
-    navigate('/dashboard');
+
+    try {
+      const result = await loginUser(userId, username, password);
+      console.log('Login successful:', result);
+      navigate('/dashboard');
+    } catch (err) {
+      setError('Invalid login credentials. Please try again.');
+      console.error('Login failed:', err);
+    }
   };
 
   return (
@@ -64,6 +72,7 @@ const LoginForm: React.FC = () => {
         <div className="form-aux">
           <a href="/forgot-password">Forgot Password?</a>
         </div>
+        {error && <p className="error-message">{error}</p>}
 
         <button type="submit" className="btn">
           Login
