@@ -1,0 +1,175 @@
+/* === Suppliers Page Container === */
+.suppliers-page {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  background-color: #f4f6f8;
+  height: 100%;
+}
+
+/* === Header Section === */
+.suppliers-page header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding: 10px;
+  background-color: #ffffff;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+}
+
+.suppliers-page header h1 {
+  font-size: 24px;
+  color: #2e7d32; /* Green color */
+  margin: 0;
+}
+
+.search-bar {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.search-bar input {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 14px;
+  width: 250px;
+}
+
+.search-bar button {
+  background-color: #2e7d32;
+  color: white;
+  border: none;
+  padding: 8px 12px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.search-bar button:hover {
+  background-color: #27642a;
+}
+
+/* === Suppliers Table Section === */
+.table-container {
+  margin-top: 20px;
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  background-color: #ffffff;
+}
+
+th,
+td {
+  padding: 12px 15px;
+  text-align: left;
+  font-size: 14px;
+}
+
+th {
+  background-color: #2e7d32;
+  color: white;
+  font-weight: bold;
+}
+
+td {
+  border-top: 1px solid #f4f4f4;
+}
+
+tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+td .status {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.status.active {
+  background-color: #4caf50;
+  color: white;
+}
+
+.status.inactive {
+  background-color: #f44336;
+  color: white;
+}
+
+td .actions {
+  display: flex;
+  gap: 10px;
+}
+
+.actions .edit-btn,
+.actions .delete-btn {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
+
+.actions .edit-btn i,
+.actions .delete-btn i {
+  font-size: 18px;
+}
+
+.actions .edit-btn {
+  color: #2e7d32;
+}
+
+.actions .delete-btn {
+  color: #f44336;
+}
+
+.actions .edit-btn:hover,
+.actions .delete-btn:hover {
+  opacity: 0.7;
+}
+
+/* === Pagination Section === */
+.pagination {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pagination button {
+  background-color: #ffffff;
+  border: 1px solid #ccc;
+  padding: 8px 12px;
+  margin: 0 5px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.pagination button:hover {
+  background-color: #2e7d32;
+  color: white;
+}
+
+/* === Responsive Styles === */
+@media (max-width: 768px) {
+  .search-bar input {
+    width: 200px;
+  }
+
+  table {
+    font-size: 12px;
+  }
+
+  .pagination button {
+    padding: 6px 10px;
+  }
+}
