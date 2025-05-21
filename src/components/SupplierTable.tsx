@@ -1,97 +1,132 @@
 import React, { useState, useEffect } from 'react';
 
-const SupplierTable: React.FC = () => {
-  const [query, setQuery] = useState('');
-  const [selected, setSelected] = useState<number[]>([]);
-  const [debouncedQuery, setDebouncedQuery] = useState(query);
+type Supplier = {
+  id: number;
+  name: string;
+  email: string;
+  status: 'Active' | 'Inactive';
+};
 
-  const data = [
-    { id: 1, name: 'Travel Mart', email: 'mart@example.com', status: 'Active' },
-    { id: 2, name: 'Himal Tours', email: 'himal@example.com', status: 'Inactive' },
-    // Add more suppliers as needed
-  ];
+type SupplierTableProps = {
+  suppliers: Supplier[];
+  selectedSuppliers: number[];
+  onSelectionChange: (selected: number[]) => void;
+  pageSize?: number;
+};
 
-  // Debouncing the search query
+const SupplierTable: React.FC<SupplierTableProps> = ({
+  suppliers,
+  selectedSuppliers,
+  onSelectionChange,
+  pageSize = 5,
+}) => {
+  const [currentPage, setCurrentPage] = useState(1);
+
   useEffect(() => {
-    const timer = setTimeout(() => setDebouncedQuery(query), 300);
-    return () => clearTimeout(timer);
-  }, [query]);
+    setCurrentPage(1);
+  }, [suppliers]);
 
-  const filtered = data.filter(
-    (d) =>
-      d.name.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
-      d.email.toLowerCase().includes(debouncedQuery.toLowerCase())
+  const totalPages = Math.ceil(suppliers.length / pageSize);
+  const pagedSuppliers = suppliers.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize
   );
 
   const toggleCheckbox = (id: number) => {
-    setSelected((prev) =>
-      prev.includes(id) ? prev.filter((i) => i !== id) : [...prev, id]
+    onSelectionChange(
+      selectedSuppliers.includes(id)
+        ? selectedSuppliers.filter((i) => i !== id)
+        : [...selectedSuppliers, id]
     );
   };
 
-  const isSelected = (id: number) => selected.includes(id);
+  const toggleSelectAll = () => {
+    if (pagedSuppliers.every((s) => selectedSuppliers.includes(s.id))) {
+      onSelectionChange(selectedSuppliers.filter((id) => !pagedSuppliers.some(s => s.id === id)));
+    } else {
+      const newSelected = Array.from(new Set([
+        ...selectedSuppliers,
+        ...pagedSuppliers.map((s) => s.id),
+      ]));
+      onSelectionChange(newSelected);
+    }
+  };
+
+  const isSelected = (id: number) => selectedSuppliers.includes(id);
 
   return (
     <section className="user-list">
-      <input
-        type="text"
-        id="supplierSearch"
-        placeholder="Search suppliers..."
-        value={query}
-        onChange={(e) => setQuery(e.target.value)}
-        aria-label="Search for suppliers"
-      />
-
-      <table>
+      <table className="supplier-table">
         <thead>
           <tr>
             <th>
               <input
                 type="checkbox"
-                checked={selected.length === filtered.length}
-                onChange={() =>
-                  setSelected(selected.length === filtered.length ? [] : filtered.map((d) => d.id))
-                }
-                aria-label="Select all suppliers"
+                checked={pagedSuppliers.every((s) => selectedSuppliers.includes(s.id))}
+                onChange={toggleSelectAll}
               />
             </th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Status</th>
-            <th>Actions</th>
+            <th className="header-green">Name</th>
+            <th className="header-green">Email</th>
+            <th className="header-green">Status</th>
+            <th className="header-green">Actions</th>
           </tr>
         </thead>
-        <tbody id="supplierTableBody">
-          {filtered.map((supplier) => (
-            <tr key={supplier.id}>
-              <td>
-                <input
-                  type="checkbox"
-                  className="supplier-checkbox"
-                  checked={isSelected(supplier.id)}
-                  onChange={() => toggleCheckbox(supplier.id)}
-                  aria-label={`Select ${supplier.name}`}
-                />
-              </td>
-              <td>{supplier.name}</td>
-              <td>{supplier.email}</td>
-              <td>
-                <span className={`status ${supplier.status.toLowerCase()}`} aria-label={`Status: ${supplier.status}`}>
-                  {supplier.status}
-                </span>
-              </td>
-              <td>
-                <button className="edit-btn" aria-label={`Edit ${supplier.name}`}>
-                  <i className="fas fa-edit"></i>
-                </button>
-                <button className="delete-btn" aria-label={`Delete ${supplier.name}`}>
-                  <i className="fas fa-trash"></i>
-                </button>
-              </td>
+        <tbody>
+          {pagedSuppliers.length === 0 ? (
+            <tr>
+              <td colSpan={5} className="no-suppliers">No suppliers found.</td>
             </tr>
-          ))}
+          ) : (
+            pagedSuppliers.map((supplier) => (
+              <tr key={supplier.id}>
+                <td>
+                  <input
+                    type="checkbox"
+                    checked={isSelected(supplier.id)}
+                    onChange={() => toggleCheckbox(supplier.id)}
+                  />
+                </td>
+                <td>{supplier.name}</td>
+                <td>{supplier.email}</td>
+                <td>
+                  <span className={`status ${supplier.status.toLowerCase()}`}>
+                    {supplier.status}
+                  </span>
+                </td>
+                <td>
+                  <button className="icon-button edit">
+                    <i className="fas fa-edit" />
+                  </button>
+                  <button className="icon-button delete">
+                    <i className="fas fa-trash" />
+                  </button>
+                </td>
+              </tr>
+            ))
+          )}
         </tbody>
       </table>
+
+      {totalPages > 1 && (
+        <div className="pagination">
+          <button onClick={() => setCurrentPage(p => Math.max(p - 1, 1))} disabled={currentPage === 1}>
+            Prev
+          </button>
+          {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+            <button
+              key={page}
+              onClick={() => setCurrentPage(page)}
+              className={page === currentPage ? 'active' : ''}
+            >
+              {page}
+            </button>
+          ))}
+          <button onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}>
+            Next
+          </button>
+        </div>
+      )}
     </section>
   );
 };

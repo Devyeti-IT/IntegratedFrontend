@@ -1,47 +1,43 @@
+import React from 'react';
 
-import React, { useState } from 'react';
-import '../styles/suppliers.css'; // Import your CSS file for styling
+type SupplierControlsProps = {
+  selectedSuppliers: number[];
+  onSearchChange: (value: string) => void;
+  onDeleteSelected: () => void;
+  onEnableSelected: () => void;
+  onDisableSelected: () => void;
+};
 
-const SupplierControls: React.FC = () => {
-  const [selectedSuppliers] = useState<string[]>([]); // Track selected suppliers
-
-
-  const isAnySupplierSelected = selectedSuppliers.length > 0;
+const SupplierControls: React.FC<SupplierControlsProps> = ({
+  selectedSuppliers,
+  onSearchChange,
+  onDeleteSelected,
+  onEnableSelected,
+  onDisableSelected,
+}) => {
+  const isAnySelected = selectedSuppliers.length > 0;
 
   return (
     <>
       <section className="user-controls">
         <input
           type="text"
-          id="supplierSearch"
           placeholder="Search suppliers..."
-          aria-label="Search for suppliers"
+          onChange={(e) => onSearchChange(e.target.value)}
         />
-        <a href="/addSupplier" className="add-user-btn" aria-label="Add a new supplier">
+        <a href="/addSupplier" className="add-user-btn">
           <i className="fas fa-user-plus"></i> Add Supplier
         </a>
       </section>
 
       <section className="bulk-actions">
-        <button
-          id="bulkDelete"
-          disabled={!isAnySupplierSelected}
-          aria-label="Delete selected suppliers"
-        >
+        <button onClick={onDeleteSelected} disabled={!isAnySelected}>
           <i className="fas fa-trash"></i> Delete Selected
         </button>
-        <button
-          id="bulkEnable"
-          disabled={!isAnySupplierSelected}
-          aria-label="Enable selected suppliers"
-        >
+        <button onClick={onEnableSelected} disabled={!isAnySelected}>
           <i className="fas fa-check"></i> Enable
         </button>
-        <button
-          id="bulkDisable"
-          disabled={!isAnySupplierSelected}
-          aria-label="Disable selected suppliers"
-        >
+        <button onClick={onDisableSelected} disabled={!isAnySelected}>
           <i className="fas fa-ban"></i> Disable
         </button>
       </section>
