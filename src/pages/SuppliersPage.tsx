@@ -21,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ title }) => {
 
 const SuppliersPage: React.FC = () => {
   return (
-    <div className="dashboard">
+    <div className="dashboard-container">
       <Sidebar />
       <main className="main">
         <Header title="Supplier Management" />

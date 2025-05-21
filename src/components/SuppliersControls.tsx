@@ -3,17 +3,8 @@ import React, { useState } from 'react';
 import '../styles/suppliers.css'; // Import your CSS file for styling
 
 const SupplierControls: React.FC = () => {
-  const [selectedSuppliers, setSelectedSuppliers] = useState<string[]>([]); // Track selected suppliers
+  const [selectedSuppliers] = useState<string[]>([]); // Track selected suppliers
 
-  const handleSupplierSelect = (supplierId: string) => {
-    setSelectedSuppliers((prevSelected) => {
-      if (prevSelected.includes(supplierId)) {
-        return prevSelected.filter(id => id !== supplierId);
-      } else {
-        return [...prevSelected, supplierId];
-      }
-    });
-  };
 
   const isAnySupplierSelected = selectedSuppliers.length > 0;
 

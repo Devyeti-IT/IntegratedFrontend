@@ -1,13 +1,27 @@
-import React, { useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // Import Link for navigation
+import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
-const navSections = [
+interface NavLink {
+  href: string;
+  icon: string;
+  label: string;
+}
+
+interface NavSection {
+  title: string;
+  icon: string; // new: for collapsed view
+  links: NavLink[];
+}
+
+const navSections: NavSection[] = [
   {
-    title: "Main",
-    links: [{ href: "/dashboard", icon: "fas fa-tachometer-alt", label: "Dashboard" }], // Make sure these hrefs match your routes
+    title: "MAIN",
+    icon: "fas fa-home",
+    links: [{ href: "/dashboard", icon: "fas fa-tachometer-alt", label: "Dashboard" }],
   },
   {
-    title: "Management",
+    title: "MANAGEMENT",
+    icon: "fas fa-briefcase",
     links: [
       { href: "/dashboard/suppliers", icon: "fas fa-plane", label: "Suppliers" },
       { href: "/users", icon: "fas fa-users", label: "Users" },
@@ -22,7 +36,8 @@ const navSections = [
     ],
   },
   {
-    title: "Settings",
+    title: "SETTINGS",
+    icon: "fas fa-cog",
     links: [
       { href: "#", icon: "fas fa-cogs", label: "System Settings" },
       { href: "#", icon: "fas fa-shield-alt", label: "Security" },
@@ -35,8 +50,8 @@ export default function Sidebar() {
   const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
-    const storedCollapsed = localStorage.getItem("sidebarCollapsed") === "true";
-    setCollapsed(storedCollapsed);
+    const stored = localStorage.getItem("sidebarCollapsed") === "true";
+    setCollapsed(stored);
   }, []);
 
   useEffect(() => {
@@ -54,16 +69,20 @@ export default function Sidebar() {
         >
           <i className="fas fa-bars" />
         </button>
-        <span className="sidebar-title">Admin Panel</span>
+        {!collapsed && <span className="sidebar-title">Admin Panel</span>}
       </h2>
       <hr />
-      {navSections.map(({ title, links }) => (
+
+      {navSections.map(({ title, icon, links }) => (
         <nav className="nav-section" key={title}>
-          <p>{title}</p>
+          <p className="section-header">
+            <i className={icon} />
+            {!collapsed && <span style={{ marginLeft: 8 }}>{title}</span>}
+          </p>
           {links.map(({ href, icon, label }) => (
             <Link to={href} key={label} className="nav-link">
               <i className={icon} />
-              {collapsed ? null : label}
+              {!collapsed && <span>{label}</span>}
             </Link>
           ))}
         </nav>
