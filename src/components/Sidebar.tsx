@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom"; // Import Link for navigation
 
 const navSections = [
   {
     title: "Main",
-    links: [{ href: "#", icon: "fas fa-tachometer-alt", label: "Dashboard" }],
+    links: [{ href: "/dashboard", icon: "fas fa-tachometer-alt", label: "Dashboard" }], // Make sure these hrefs match your routes
   },
   {
     title: "Management",
     links: [
-      { href: "suppliers", icon: "fas fa-plane", label: "Suppliers" },
-      { href: "users", icon: "fas fa-users", label: "Users" },
-      { href: "agencies", icon: "fas fa-building", label: "Agencies" },
+      { href: "/dashboard/suppliers", icon: "fas fa-plane", label: "Suppliers" },
+      { href: "/users", icon: "fas fa-users", label: "Users" },
+      { href: "/agencies", icon: "fas fa-building", label: "Agencies" },
       { href: "#", icon: "fas fa-plug", label: "API Management" },
       { href: "#", icon: "fas fa-file-alt", label: "Logs" },
       { href: "#", icon: "fas fa-chart-line", label: "Finance Reports" },
@@ -60,10 +61,10 @@ export default function Sidebar() {
         <nav className="nav-section" key={title}>
           <p>{title}</p>
           {links.map(({ href, icon, label }) => (
-            <a href={href} key={label}>
+            <Link to={href} key={label} className="nav-link">
               <i className={icon} />
               {collapsed ? null : label}
-            </a>
+            </Link>
           ))}
         </nav>
       ))}
