@@ -98,9 +98,6 @@ const SupplierTable: React.FC<SupplierTableProps> = ({
                   <button className="icon-button edit">
                     <i className="fas fa-edit" />
                   </button>
-                  <button className="icon-button delete">
-                    <i className="fas fa-trash" />
-                  </button>
                 </td>
               </tr>
             ))
