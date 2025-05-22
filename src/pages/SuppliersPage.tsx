@@ -4,6 +4,8 @@ import Header from '../components/Header';
 import SupplierControls from '../components/SuppliersControls';
 import SupplierTable from '../components/SupplierTable';
 import '../styles/suppliers.css';
+import AddSupplierModal from '../components/AddSupplierModal';
+
 
 type Supplier = {
   id: number;
@@ -53,6 +55,18 @@ const SuppliersPage: React.FC = () => {
     setSelectedSuppliers([]);
   };
 
+  // Add Supplier Modal 
+const [showAddModal, setShowAddModal] = useState(false);
+const handleAddSupplier = (newSupplierData: any) => {
+  const newSupplier: Supplier = {
+    id: suppliers.length + 1,
+    name: newSupplierData.name,
+    email: newSupplierData.email,
+    status: 'Active', // Default
+  };
+  setSuppliers([...suppliers, newSupplier]);
+};
+
   return (
     <div className="dashboard-container">
       <Sidebar />
@@ -70,6 +84,12 @@ const SuppliersPage: React.FC = () => {
           selectedSuppliers={selectedSuppliers}
           onSelectionChange={setSelectedSuppliers}
         />
+        {showAddModal && (
+          <AddSupplierModal
+            onClose={() => setShowAddModal(false)}
+            onAddSupplier={handleAddSupplier}
+          />
+        )}
       </div>
     </div>
   );

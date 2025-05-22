@@ -73,6 +73,7 @@ const SupplierTable: React.FC<SupplierTableProps> = ({
                 aria-label="Select all on this page"
               />
             </th>
+            <th className="header-green">ID</th>
             <th className="header-green">Name</th>
             <th className="header-green">Email</th>
             <th className="header-green">Status</th>
@@ -82,7 +83,7 @@ const SupplierTable: React.FC<SupplierTableProps> = ({
         <tbody>
           {pagedSuppliers.length === 0 ? (
             <tr>
-              <td colSpan={5} className="no-suppliers">
+              <td colSpan={6} className="no-suppliers">
                 No suppliers found.
               </td>
             </tr>
@@ -97,6 +98,7 @@ const SupplierTable: React.FC<SupplierTableProps> = ({
                     aria-label={`Select supplier ${supplier.name}`}
                   />
                 </td>
+                <td>{supplier.id}</td> {/* ✅ Now correctly rendering ID */}
                 <td>{supplier.name}</td>
                 <td>{supplier.email}</td>
                 <td>

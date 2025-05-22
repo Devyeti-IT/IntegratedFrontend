@@ -222,3 +222,57 @@ header h1 {
   color: #d32f2f;
   font-weight: 600;
 }
+/* === Dark Mode Toggle === */
+.dark-toggle {
+  background: none;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  color: #2e7d32;
+  transition: color 0.3s ease;
+}
+
+/* === Dark Mode Styles === */
+body.dark-mode {
+  background-color: #121212;
+  color: #e0e0e0;
+}
+
+body.dark-mode .main-content {
+  background-color: #121212;
+}
+
+body.dark-mode header {
+  border-bottom: 1px solid #333;
+}
+
+body.dark-mode header h1 {
+  color: #bbf7d0;
+}
+
+body.dark-mode .admin-info {
+  color: #ccc;
+}
+
+body.dark-mode .card {
+  background-color: #1e1e1e;
+  box-shadow: 0 1px 8px rgba(255, 255, 255, 0.05);
+}
+
+body.dark-mode .card h3,
+body.dark-mode .card p {
+  color: #e0e0e0;
+}
+
+body.dark-mode .recent-card {
+  background-color: #1e1e1e;
+  color: #e0e0e0;
+}
+
+body.dark-mode .nav-section a {
+  color: #fff;
+}
+
+body.dark-mode .nav-section a:hover {
+  background-color: #388e3c;
+}

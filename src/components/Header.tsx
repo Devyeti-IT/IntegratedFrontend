@@ -1,10 +1,11 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
-import { useAuth } from "../context/AuthContext"; // import
+import { useAuth } from "../context/AuthContext";
+import DarkModeToggle from './DarkModeToggle'; // Import toggle
 
 const Header: React.FC = () => {
   const location = useLocation();
-  const { username } = useAuth(); // get username
+  const { username } = useAuth();
 
   const getTitle = () => {
     const path = location.pathname;
@@ -13,6 +14,7 @@ const Header: React.FC = () => {
     if (path === "/dashboard/suppliers") return "Supplier Management";
     if (path === "/users") return "User Management";
     if (path === "/agencies") return "Agency Management";
+    if (path == "/dashboard/apitest") return "Test API";
     return "Admin Panel";
   };
 
@@ -23,6 +25,7 @@ const Header: React.FC = () => {
         <span className="admin-name" role="img" aria-label="admin">
           👤 {username || "Super Admin"}
         </span>
+        <DarkModeToggle />
       </div>
     </header>
   );
