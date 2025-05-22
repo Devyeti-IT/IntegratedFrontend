@@ -10,7 +10,8 @@ import "@fortawesome/fontawesome-free/css/all.min.css"; // Font Awesome icons
 import './styles/login.css'; // Login page styles
 import './styles/dashboard.css'; // Dashboard page styles
 import './styles/suppliers.css'; // Suppliers page styles
-
+import UsersPage from './pages/UsersPage';
+import './styles/users.css';
 
 const App: React.FC = () => {
   return (
@@ -18,22 +19,23 @@ const App: React.FC = () => {
       <Routes>
         {/* Route for Login Page */}
         <Route path="/login" element={<Login />} />
-        
+
         {/* Route for Dashboard Page */}
         <Route path="/dashboard" element={<Dashboard />} />
 
         {/* Route for Suppliers Management */}
         <Route path="/dashboard/suppliers" element={<SuppliersPage />} />
-        
+
         {/* Route for Users Management */}
-        {/* <Route path="/dashboard/users" element={<UsersPage />} /> */}
+        <Route path="/" element={<Navigate to="/dashboard/users" />} />
+        <Route path="/dashboard/users" element={<UsersPage />} />
 
         {/* Route for Agencies Management */}
         {/* <Route path="/dashboard/agencies" element={<AgenciesPage />} /> */}
 
         {/* Route for API Management */}
         {/* <Route path="/dashboard/api-management" element={<NotFoundPage />} /> */}
-        
+
         {/* Route for Finance Reports */}
         {/* <Route path="/dashboard/finance-reports" element={<NotFoundPage />} /> */}
 

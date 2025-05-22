@@ -24,7 +24,7 @@ const navSections: NavSection[] = [
     icon: "fas fa-briefcase",
     links: [
       { href: "/dashboard/suppliers", icon: "fas fa-plane", label: "Suppliers" },
-      { href: "/users", icon: "fas fa-users", label: "Users" },
+      { href: "/dashboard/users", icon: "fas fa-users", label: "Users" },
       { href: "/agencies", icon: "fas fa-building", label: "Agencies" },
       { href: "#", icon: "fas fa-plug", label: "API Management" },
       { href: "#", icon: "fas fa-file-alt", label: "Logs" },
