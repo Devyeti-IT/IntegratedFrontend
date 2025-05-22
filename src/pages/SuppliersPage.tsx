@@ -57,7 +57,7 @@ const SuppliersPage: React.FC = () => {
     <div className="dashboard-container">
       <Sidebar />
       <div className="main-content">
-        <Header username={''} />
+        {/* <Header username={''} /> */}
         <SupplierControls
           selectedSuppliers={selectedSuppliers}
           onSearchChange={setSearchQuery}
