@@ -1,63 +1,97 @@
+/* === Layout === */
 .user-controls {
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
   align-items: center;
-  margin: 1rem;
+  margin: 1rem 1rem 0.5rem;
   gap: 1rem;
 }
 
 .user-controls input[type="text"] {
-  padding: 8px;
+  padding: 10px 12px;
   flex: 1;
   max-width: 400px;
   border: 1px solid #ccc;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 14px;
 }
 
 .add-user-btn {
   text-decoration: none;
   background-color: #2e7d32;
   color: white;
-  padding: 8px 12px;
-  border-radius: 4px;
-  font-weight: bold;
+  padding: 10px 14px;
+  border-radius: 6px;
+  font-weight: 600;
+  transition: background 0.2s ease;
 }
 
+.add-user-btn:hover {
+  background-color: #256329;
+}
+
+/* === Bulk Actions === */
 .bulk-actions {
   display: flex;
   gap: 1rem;
-  margin: 1rem;
+  margin: 0.5rem 1rem 1rem;
+  flex-wrap: wrap;
 }
 
 .bulk-actions button {
-  padding: 6px 12px;
-  border-radius: 4px;
-  font-weight: bold;
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-weight: 600;
   border: none;
   cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .bulk-actions button:disabled {
-  opacity: 0.8;
+  opacity: 0.6;
   cursor: not-allowed;
 }
 
+.bulk-actions button:nth-child(1) {
+  background-color: #e53935;
+  color: white;
+}
+
+.bulk-actions button:nth-child(2) {
+  background-color: #43a047;
+  color: white;
+}
+
+.bulk-actions button:nth-child(3) {
+  background-color: #fb8c00;
+  color: white;
+}
+
+.bulk-actions button:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+/* === Table Styling === */
 .user-list {
   margin: 1rem;
+  overflow-x: auto;
 }
 
 .user-list table {
   width: 100%;
   border-collapse: collapse;
   background-color: #fff;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 }
 
 .user-list th,
 .user-list td {
-  padding: 12px;
+  padding: 14px 12px;
   border-bottom: 1px solid #eee;
   text-align: left;
+  font-size: 14px;
 }
 
 thead tr {
@@ -65,54 +99,77 @@ thead tr {
   color: white;
 }
 
-.status.active {
+tbody tr:hover {
+  background-color: #f9f9f9;
+}
+
+/* === Status Styling === */
+.status {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 14px;
+  font-size: 13px;
+  font-weight: 600;
   color: white;
+}
+
+.status.active {
   background-color: #4caf50;
-  padding: 4px 8px;
-  border-radius: 4px;
 }
 
 .status.inactive {
-  color: white;
   background-color: #f44336;
-  padding: 4px 8px;
-  border-radius: 4px;
 }
 
+/* === Action Buttons === */
 .icon-button {
   background: none;
   border: none;
   cursor: pointer;
   font-size: 16px;
-  margin-right: 8px;
+  color: #444;
+  padding: 4px;
+  transition: color 0.2s ease;
 }
 
 .icon-button:hover {
-  opacity: 0.7;
+  color: #2e7d32;
 }
 
+/* === No Data === */
 .no-suppliers {
   text-align: center;
   padding: 20px;
   color: #999;
+  font-style: italic;
 }
 
+/* === Pagination === */
 .pagination {
   display: flex;
   justify-content: center;
-  margin: 1rem 0;
+  margin: 1.5rem 0;
   gap: 8px;
+  flex-wrap: wrap;
 }
 
 .pagination button {
-  padding: 6px 10px;
+  padding: 6px 12px;
+  border-radius: 6px;
   border: 1px solid #ccc;
   background-color: white;
+  color: #333;
   cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
 }
 
 .pagination .active {
   background-color: #2e7d32;
   color: white;
-  font-weight: bold;
+  border-color: #2e7d32;
+}
+
+.pagination button:hover:not(.active) {
+  background-color: #f0f0f0;
 }

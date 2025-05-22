@@ -5,16 +5,24 @@ import SupplierControls from '../components/SuppliersControls';
 import SupplierTable from '../components/SupplierTable';
 import '../styles/suppliers.css';
 
+type Supplier = {
+  id: number;
+  name: string;
+  email: string;
+  status: 'Active' | 'Inactive';
+};
+
 const SuppliersPage: React.FC = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSuppliers, setSelectedSuppliers] = useState<number[]>([]);
 
-  const suppliers = [
-    { id: 1, name: 'Travel Mart', email: 'mart@example.com', status: 'Active' as const },
-    { id: 2, name: 'Himal Tours', email: 'himal@example.com', status: 'Inactive' as const },
-    { id: 3, name: 'Everest Travels', email: 'everest@example.com', status: 'Active' as const },
-    { id: 4, name: 'Kathmandu Expeditions', email: 'ktm@example.com', status: 'Inactive' as const },
-  ];
+  // ✅ Make suppliers stateful!
+  const [suppliers, setSuppliers] = useState<Supplier[]>([
+    { id: 1, name: 'Travel Mart', email: 'mart@example.com', status: 'Active' },
+    { id: 2, name: 'Himal Tours', email: 'himal@example.com', status: 'Inactive' },
+    { id: 3, name: 'Everest Travels', email: 'everest@example.com', status: 'Active' },
+    { id: 4, name: 'Kathmandu Expeditions', email: 'ktm@example.com', status: 'Inactive' },
+  ]);
 
   const filteredSuppliers = suppliers.filter(
     (s) =>
@@ -23,23 +31,33 @@ const SuppliersPage: React.FC = () => {
   );
 
   const handleDeleteSelected = () => {
+    setSuppliers(prev => prev.filter(s => !selectedSuppliers.includes(s.id)));
     setSelectedSuppliers([]);
-    // Add logic to remove suppliers from the backend if needed
   };
 
   const handleEnableSelected = () => {
-    // Add logic to enable selected suppliers
+    setSuppliers(prev =>
+      prev.map(s =>
+        selectedSuppliers.includes(s.id) ? { ...s, status: 'Active' } : s
+      )
+    );
+    setSelectedSuppliers([]);
   };
 
   const handleDisableSelected = () => {
-    // Add logic to disable selected suppliers
+    setSuppliers(prev =>
+      prev.map(s =>
+        selectedSuppliers.includes(s.id) ? { ...s, status: 'Inactive' } : s
+      )
+    );
+    setSelectedSuppliers([]);
   };
 
   return (
     <div className="dashboard-container">
       <Sidebar />
       <div className="main-content">
-        <Header />
+        <Header username={''} />
         <SupplierControls
           selectedSuppliers={selectedSuppliers}
           onSearchChange={setSearchQuery}

@@ -23,7 +23,7 @@ const SupplierTable: React.FC<SupplierTableProps> = ({
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
-    setCurrentPage(1);
+    setCurrentPage(1); // Reset page when supplier list changes
   }, [suppliers]);
 
   const totalPages = Math.ceil(suppliers.length / pageSize);
@@ -32,23 +32,29 @@ const SupplierTable: React.FC<SupplierTableProps> = ({
     currentPage * pageSize
   );
 
+  const allCurrentSelected = pagedSuppliers.every((s) =>
+    selectedSuppliers.includes(s.id)
+  );
+
   const toggleCheckbox = (id: number) => {
-    onSelectionChange(
-      selectedSuppliers.includes(id)
-        ? selectedSuppliers.filter((i) => i !== id)
-        : [...selectedSuppliers, id]
-    );
+    const isAlreadySelected = selectedSuppliers.includes(id);
+    const newSelected = isAlreadySelected
+      ? selectedSuppliers.filter((i) => i !== id)
+      : [...selectedSuppliers, id];
+    onSelectionChange(newSelected);
   };
 
   const toggleSelectAll = () => {
-    if (pagedSuppliers.every((s) => selectedSuppliers.includes(s.id))) {
-      onSelectionChange(selectedSuppliers.filter((id) => !pagedSuppliers.some(s => s.id === id)));
+    if (allCurrentSelected) {
+      const newSelection = selectedSuppliers.filter(
+        (id) => !pagedSuppliers.some((s) => s.id === id)
+      );
+      onSelectionChange(newSelection);
     } else {
-      const newSelected = Array.from(new Set([
-        ...selectedSuppliers,
-        ...pagedSuppliers.map((s) => s.id),
-      ]));
-      onSelectionChange(newSelected);
+      const newSelection = Array.from(
+        new Set([...selectedSuppliers, ...pagedSuppliers.map((s) => s.id)])
+      );
+      onSelectionChange(newSelection);
     }
   };
 
@@ -56,14 +62,15 @@ const SupplierTable: React.FC<SupplierTableProps> = ({
 
   return (
     <section className="user-list">
-      <table className="supplier-table">
+      <table className="supplier-table" role="table" aria-label="Supplier Table">
         <thead>
           <tr>
             <th>
               <input
                 type="checkbox"
-                checked={pagedSuppliers.every((s) => selectedSuppliers.includes(s.id))}
+                checked={allCurrentSelected}
                 onChange={toggleSelectAll}
+                aria-label="Select all on this page"
               />
             </th>
             <th className="header-green">Name</th>
@@ -75,7 +82,9 @@ const SupplierTable: React.FC<SupplierTableProps> = ({
         <tbody>
           {pagedSuppliers.length === 0 ? (
             <tr>
-              <td colSpan={5} className="no-suppliers">No suppliers found.</td>
+              <td colSpan={5} className="no-suppliers">
+                No suppliers found.
+              </td>
             </tr>
           ) : (
             pagedSuppliers.map((supplier) => (
@@ -85,17 +94,21 @@ const SupplierTable: React.FC<SupplierTableProps> = ({
                     type="checkbox"
                     checked={isSelected(supplier.id)}
                     onChange={() => toggleCheckbox(supplier.id)}
+                    aria-label={`Select supplier ${supplier.name}`}
                   />
                 </td>
                 <td>{supplier.name}</td>
                 <td>{supplier.email}</td>
                 <td>
-                  <span className={`status ${supplier.status.toLowerCase()}`}>
-                    {supplier.status}
+                  <span
+                    className={`status ${supplier.status.toLowerCase()}`}
+                    aria-label={supplier.status}
+                  >
+                    {supplier.status === 'Active' ? '🟢' : '🔴'} {supplier.status}
                   </span>
                 </td>
                 <td>
-                  <button className="icon-button edit">
+                  <button className="icon-button edit" aria-label="Edit supplier">
                     <i className="fas fa-edit" />
                   </button>
                 </td>
@@ -107,7 +120,11 @@ const SupplierTable: React.FC<SupplierTableProps> = ({
 
       {totalPages > 1 && (
         <div className="pagination">
-          <button onClick={() => setCurrentPage(p => Math.max(p - 1, 1))} disabled={currentPage === 1}>
+          <button
+            onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
+            disabled={currentPage === 1}
+            aria-label="Previous page"
+          >
             Prev
           </button>
           {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
@@ -115,11 +132,16 @@ const SupplierTable: React.FC<SupplierTableProps> = ({
               key={page}
               onClick={() => setCurrentPage(page)}
               className={page === currentPage ? 'active' : ''}
+              aria-label={`Page ${page}`}
             >
               {page}
             </button>
           ))}
-          <button onClick={() => setCurrentPage(p => Math.min(p + 1, totalPages))} disabled={currentPage === totalPages}>
+          <button
+            onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
+            disabled={currentPage === totalPages}
+            aria-label="Next page"
+          >
             Next
           </button>
         </div>

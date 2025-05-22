@@ -2,18 +2,20 @@ import React, { useState } from "react";
 import "../styles/login.css";
 import logo from "../assets/yetiAirlinesLogo.png";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // add this
 
 const LoginForm: React.FC = () => {
   const navigate = useNavigate();
+  const { setUsername } = useAuth(); // get setter
 
   const [userId, setUserId] = useState("");
-  const [username, setUsername] = useState("");
+  const [username, setUsernameLocal] = useState("");
   const [password, setPassword] = useState("");
 
   const handleLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    // TODO: Replace with actual auth logic
     if (userId && username && password) {
+      setUsername(username); // save username to context
       navigate("/dashboard");
     } else {
       alert("Please fill in all fields.");
@@ -48,7 +50,7 @@ const LoginForm: React.FC = () => {
             id="username"
             placeholder="admin_user"
             value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            onChange={(e) => setUsernameLocal(e.target.value)}
             required
           />
         </div>

@@ -1,8 +1,10 @@
 import React from "react";
 import { useLocation } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"; // import
 
 const Header: React.FC = () => {
   const location = useLocation();
+  const { username } = useAuth(); // get username
 
   const getTitle = () => {
     const path = location.pathname;
@@ -18,11 +20,8 @@ const Header: React.FC = () => {
     <header>
       <h1>{getTitle()}</h1>
       <div className="admin-info">
-        <span className="icon" role="img" aria-label="notifications">
-          🔔
-        </span>
         <span className="admin-name" role="img" aria-label="admin">
-          👤 Super Admin
+          👤 {username || "Super Admin"}
         </span>
       </div>
     </header>
