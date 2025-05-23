@@ -1,0 +1,224 @@
+/* agency.css */
+
+.dashboard-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f5f7fa;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.main-content {
+  flex: 1;
+  padding: 20px 30px;
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Header */
+header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 10px;
+  margin-bottom: 15px;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  color: #333;
+  margin: 0;
+}
+
+.admin-info {
+  font-size: 1.1rem;
+  color: #666;
+}
+
+.admin-info .icon {
+  font-size: 1.3rem;
+}
+
+/* Agency Controls */
+.agency-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+  gap: 15px;
+}
+
+.agency-controls input[type="text"] {
+  flex-grow: 1;
+  padding: 8px 12px;
+  border: 1.8px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+  transition: border-color 0.3s ease;
+}
+
+.agency-controls input[type="text"]:focus {
+  border-color: #3f51b5;
+  outline: none;
+}
+
+.agency-controls .add-btn {
+  background-color: #3f51b5;
+  border: none;
+  color: white;
+  padding: 8px 18px;
+  border-radius: 5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.3s ease;
+}
+
+.agency-controls .add-btn:hover {
+  background-color: #303f9f;
+}
+
+/* Bulk Actions */
+.bulk-actions {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.bulk-actions button {
+  padding: 8px 15px;
+  border: 1.5px solid #3f51b5;
+  background-color: white;
+  color: #3f51b5;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.bulk-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.bulk-actions button:not(:disabled):hover {
+  background-color: #3f51b5;
+  color: white;
+}
+
+/* Data Table */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  box-shadow: 0 2px 8px rgb(0 0 0 / 0.1);
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: white;
+}
+
+.data-table thead {
+  background-color: #3f51b5;
+  color: white;
+  font-weight: 600;
+}
+
+.data-table th,
+.data-table td {
+  text-align: left;
+  padding: 12px 15px;
+  border-bottom: 1px solid #ddd;
+  vertical-align: middle;
+}
+
+.data-table tbody tr:hover {
+  background-color: #f0f4ff;
+}
+
+.data-table input[type="checkbox"] {
+  width: 18px;
+  height: 18px;
+  cursor: pointer;
+}
+
+/* Modal styles */
+.modal-backdrop {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.4);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: white;
+  padding: 25px 30px;
+  border-radius: 8px;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  width: 380px;
+  max-width: 90%;
+}
+
+.modal h2 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+  color: green;
+  text-align: center;
+}
+
+.modal form input {
+  width: 100%;
+  padding: 10px 12px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  border: 1.5px solid #ccc;
+  border-radius: 6px;
+  transition: border-color 0.3s ease;
+}
+
+.modal form input:focus {
+  border-color: #3f51b5;
+  outline: none;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 15px;
+}
+
+.modal-actions button {
+  padding: 8px 18px;
+  font-weight: 600;
+  border-radius: 5px;
+  cursor: pointer;
+  border: none;
+  transition: background-color 0.3s ease;
+}
+
+.modal-actions button[type="submit"] {
+  background-color: #3f51b5;
+  color: white;
+}
+
+.modal-actions button[type="submit"]:hover {
+  background-color: #303f9f;
+}
+
+.modal-actions button[type="button"] {
+  background-color: #ccc;
+  color: #444;
+}
+
+.modal-actions button[type="button"]:hover {
+  background-color: #999;
+}

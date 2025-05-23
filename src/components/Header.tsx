@@ -9,19 +9,31 @@ const Header: React.FC = () => {
 
     if (path === "/dashboard") return "Dashboard Overview";
     if (path === "/dashboard/suppliers") return "Supplier Management";
-    if (path === "/users") return "User Management";
-    if (path === "/agencies") return "Agency Management";
+    if (path === "/dashboard/users") return "User Management";
+    if (path === "/dashboard/agencies") return "Agency Management";
+
+    // fallback title
     return "Admin Panel";
   };
 
   return (
     <header>
       <h1>{getTitle()}</h1>
-      <div className="admin-info">
-        <span className="icon" role="img" aria-label="notifications">
+      <div className="admin-info" style={{ display: "flex", gap: "15px", alignItems: "center" }}>
+        <span
+          className="icon"
+          role="img"
+          aria-label="notifications"
+          style={{ cursor: "pointer" }}
+        >
           🔔
         </span>
-        <span className="admin-name" role="img" aria-label="admin">
+        <span
+          className="admin-name"
+          role="img"
+          aria-label="admin"
+          style={{ cursor: "default" }}
+        >
           👤 Super Admin
         </span>
       </div>

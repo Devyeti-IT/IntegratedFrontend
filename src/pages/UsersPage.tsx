@@ -1,68 +1,83 @@
-import React, { useState } from "react";
-import Sidebar from "../components/Sidebar";
-import Header from "../components/Header";
-import AddUserModal from "../components/AddUserModal";
-import EditUserModal from "../components/EditUserModal";
-import "../styles/dashboard.css";
+import React, { useState } from 'react';
+import Sidebar from '../components/Sidebar';
+import Header from '../components/Header';
+import UserControls from '../components/UsersControl';
+import UserTable from '../components/UserTable';
+import AddUserModal from '../components/AddUserModal'; // Make sure the path is correct
+import '../styles/users.css';
 
 const UsersPage: React.FC = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedUsers, setSelectedUsers] = useState<number[]>([]);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+
   const [users, setUsers] = useState([
-    { id: 1, name: "Alice Johnson", email: "alice@example.com" },
-    { id: 2, name: "Bob Smith", email: "bob@example.com" }
+    { id: 1, name: 'Alice', email: 'alice@example.com', status: 'Active' as const },
+    { id: 2, name: 'Bob', email: 'bob@example.com', status: 'Inactive' as const },
+    { id: 3, name: 'Charlie', email: 'charlie@example.com', status: 'Active' as const },
+    { id: 4, name: 'Diana', email: 'diana@example.com', status: 'Inactive' as const },
   ]);
-  const [isAddOpen, setAddOpen] = useState(false);
-  const [isEditOpen, setEditOpen] = useState(false);
-  const [editingUser, setEditingUser] = useState<{ id: number; name: string; email: string } | null>(null);
 
-  const addUser = (user: { name: string; email: string }) => {
-    const newUser = { id: Date.now(), ...user };
-    setUsers((prev) => [...prev, newUser]);
+  const filteredUsers = users.filter(
+    (u) =>
+      u.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      u.email.toLowerCase().includes(searchQuery.toLowerCase())
+  );
+
+  const handleDeleteSelected = () => {
+    setSelectedUsers([]);
+    // Logic to delete users
   };
 
-  const updateUser = (updated: { id: number; name: string; email: string }) => {
-    setUsers((prev) => prev.map((u) => (u.id === updated.id ? updated : u)));
+  const handleEnableSelected = () => {
+    // Logic to enable users
   };
 
-  const deleteUser = (id: number) => {
-    setUsers((prev) => prev.filter((u) => u.id !== id));
+  const handleDisableSelected = () => {
+    // Logic to disable users
   };
+
+  interface NewUser {
+    firstName: string;
+    lastName: string;
+    email: string;
+  }
+
+  function handleAddUser(newUser: NewUser): void {
+    const newId = users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
+    const fullName = `${newUser.firstName} ${newUser.lastName}`;
+    const userToAdd = {
+      id: newId,
+      name: fullName,
+      email: newUser.email,
+      status: 'Active' as const,
+    };
+    setUsers([...users, userToAdd]);
+  }
 
   return (
     <div className="dashboard-container">
       <Sidebar />
       <div className="main-content">
         <Header />
-        <div className="user-actions">
-          <h2>Users</h2>
-          <button onClick={() => setAddOpen(true)}>+ Add User</button>
-        </div>
-
-        <table className="user-table">
-          <thead>
-            <tr>
-              <th>ID</th>
-              <th>Name</th>
-              <th>Email</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((u) => (
-              <tr key={u.id}>
-                <td>{u.id}</td>
-                <td>{u.name}</td>
-                <td>{u.email}</td>
-                <td>
-                  <button onClick={() => { setEditingUser(u); setEditOpen(true); }}>Edit</button>
-                  <button onClick={() => deleteUser(u.id)}>Delete</button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-
-        <AddUserModal isOpen={isAddOpen} onClose={() => setAddOpen(false)} onAdd={addUser} />
-        <EditUserModal isOpen={isEditOpen} onClose={() => setEditOpen(false)} onUpdate={updateUser} user={editingUser} />
+        <UserControls
+          selectedUsers={selectedUsers}
+          onSearchChange={setSearchQuery}
+          onDeleteSelected={handleDeleteSelected}
+          onEnableSelected={handleEnableSelected}
+          onDisableSelected={handleDisableSelected}
+          onAddUserClick={() => setIsAddModalOpen(true)} // <== Add this prop
+        />
+        <UserTable
+          users={filteredUsers}
+          selectedUsers={selectedUsers}
+          onSelectionChange={setSelectedUsers}
+        />
+        <AddUserModal
+          isOpen={isAddModalOpen}
+          onClose={() => setIsAddModalOpen(false)}
+          onAdd={handleAddUser}
+        />
       </div>
     </div>
   );
