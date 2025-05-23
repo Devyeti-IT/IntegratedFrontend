@@ -23,14 +23,14 @@ const navSections: NavSection[] = [
     title: "MANAGEMENT",
     icon: "fas fa-briefcase",
     links: [
-      { href: "/dashboard/suppliers", icon: "fas fa-plane", label: "Suppliers" },
+      { href: "/dashboard/suppliers", icon: "fas fa-link", label: "Suppliers" },
       { href: "/users", icon: "fas fa-users", label: "Users" },
       { href: "/agencies", icon: "fas fa-building", label: "Agencies" },
       { href: "/dashboard/apitest", icon: "fas fa-plug", label: "Test API" },
-      { href: "#", icon: "fas fa-file-alt", label: "Logs" },
-      { href: "#", icon: "fas fa-chart-line", label: "Finance Reports" },
-      { href: "#", icon: "fas fa-credit-card", label: "Payment Processing" },
-      { href: "#", icon: "fas fa-ticket-alt", label: "Ticket Sales" },
+      { href: "#", icon: "fas fa-plane", label: "Flights" },
+      { href: "#", icon: "fas fa-dollar-sign", label: "Fare Override" }, // changed to money-bill
+      { href: "#", icon: "fas fa-ticket-alt", label: "Booking" },
+      { href: "#", icon: "fas fa-hand-holding-usd", label: "Payments" },
       { href: "#", icon: "fas fa-chart-pie", label: "Revenue Analytics" },
       { href: "#", icon: "fas fa-money-bill-wave", label: "Expense Tracking" },
     ],
@@ -79,8 +79,8 @@ export default function Sidebar() {
             <i className={icon} />
             {!collapsed && <span style={{ marginLeft: 8 }}>{title}</span>}
           </p>
-          {links.map(({ href, icon, label }) => (
-            <Link to={href} key={label} className="nav-link">
+          {links.map(({ href, icon, label }, idx) => (
+            <Link to={href} key={`${label}-${idx}`} className="nav-link">
               <i className={icon} />
               {!collapsed && <span>{label}</span>}
             </Link>

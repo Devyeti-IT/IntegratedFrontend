@@ -32,6 +32,7 @@
     flex-wrap: nowrap;
     align-content: flex-start;
     flex-direction: row;
+    color: white;
 }
 
 .sidebar h2 button {
@@ -51,7 +52,7 @@
 .nav-section p {
   font-weight: 700;
   color: rgb(255, 191, 0);
-  font-size: 18px;
+  font-size: 22px;
   margin: 1rem 0 0.5rem;
   letter-spacing: 0.03em;
   /* background-color: #ddd; */
@@ -234,7 +235,7 @@ header h1 {
 
 /* === Dark Mode Styles === */
 body.dark-mode {
-  background-color: #121212;
+  background-color: #222222;
   color: #e0e0e0;
 }
 
@@ -247,7 +248,7 @@ body.dark-mode header {
 }
 
 body.dark-mode header h1 {
-  color: #bbf7d0;
+  color: #e8e8e8;
 }
 
 body.dark-mode .admin-info {
@@ -264,8 +265,14 @@ body.dark-mode .card p {
   color: #e0e0e0;
 }
 
-body.dark-mode .recent-card {
+body.dark-mode .recent-activity .recent-card {
   background-color: #1e1e1e;
+}
+body.dark-mode .recent-card h2{
+  color: #e0e0e0;
+}
+
+body.dark-mode .recent-card ul{
   color: #e0e0e0;
 }
 

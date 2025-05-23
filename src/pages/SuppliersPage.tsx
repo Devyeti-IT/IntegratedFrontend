@@ -20,10 +20,9 @@ const SuppliersPage: React.FC = () => {
 
   // ✅ Make suppliers stateful!
   const [suppliers, setSuppliers] = useState<Supplier[]>([
-    { id: 1, name: 'Travel Mart', email: 'mart@example.com', status: 'Active' },
-    { id: 2, name: 'Himal Tours', email: 'himal@example.com', status: 'Inactive' },
-    { id: 3, name: 'Everest Travels', email: 'everest@example.com', status: 'Active' },
-    { id: 4, name: 'Kathmandu Expeditions', email: 'ktm@example.com', status: 'Inactive' },
+    { id: 1, name: 'Yeti Airlines', email: 'yeti@yetiairlines.com', status: 'Active' },
+    { id: 2, name: 'Tara Air', email: 'tara@taraair.com', status: 'Inactive' },
+    
   ]);
 
   const filteredSuppliers = suppliers.filter(
