@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "../styles/api-test.css";
+import { getFlightAvailability } from "../api/api";
 
 type ApiPayload = {
   strOrigin: string;
@@ -57,6 +58,14 @@ export default function ApiManagement() {
 
   const formatDate = (dateStr: string) => dateStr.replace(/-/g, "");
 
+  const formatTime = (timeNum: number) => {
+    const hours = Math.floor(timeNum / 100);
+    const minutes = timeNum % 100;
+    return `${hours.toString().padStart(2, "0")}:${minutes
+      .toString()
+      .padStart(2, "0")}`;
+  };
+
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
@@ -91,18 +100,7 @@ export default function ApiManagement() {
     setTestResults((prev) => [newTest, ...prev]);
 
     try {
-      // Replace below URL with your actual API endpoint
-      const response = await fetch("https://your-api-endpoint.com/search", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(payload),
-      });
-
-      if (!response.ok) throw new Error(`Status ${response.status}`);
-
-      const data = await response.json();
+      const data = await getFlightAvailability(payload);
 
       setTestResults((prev) =>
         prev.map((test) =>
@@ -127,7 +125,6 @@ export default function ApiManagement() {
       <h1>Testing API</h1>
 
       <form onSubmit={handleSubmit} className="api-form">
-        {/* Reuse input fields as before (abbreviated for brevity) */}
         <label>
           Origin (IATA):
           <input
@@ -340,38 +337,116 @@ export default function ApiManagement() {
         {testResults.length === 0 ? (
           <p>No tests run yet.</p>
         ) : (
-          <table>
-            <thead>
-              <tr>
-                <th>Timestamp</th>
-                <th>Origin → Destination</th>
-                <th>Trip Type</th>
-                <th>Passengers (A/C/I/O)</th>
-                <th>Status</th>
-                <th>Response / Error</th>
-              </tr>
-            </thead>
-            <tbody>
-              {testResults.map(({ id, timestamp, payload, status, response, errorMessage }) => (
-                <tr key={id} className={`status-${status}`}>
-                  <td>{timestamp}</td>
-                  <td>{payload.strOrigin} → {payload.strDestination}</td>
-                  <td>{payload.strTripType === "O" ? "One-way" : "Round-trip"}</td>
-                  <td>
-                    {payload.iAdult} / {payload.iChild} / {payload.iInfant} / {payload.iOther}
-                  </td>
-                  <td>{status}</td>
-                  <td>
-                    {status === "success" && (
-                      <pre>{JSON.stringify(response, null, 2)}</pre>
-                    )}
-                    {status === "error" && <span className="error">{errorMessage}</span>}
-                    {status === "pending" && <em>Loading...</em>}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          testResults.map(
+            ({ id, timestamp, payload, status, response, errorMessage }) => (
+              <div key={id} className={`test-result status-${status}`}>
+                <h3>
+                  {timestamp} — {payload.strOrigin} → {payload.strDestination} (
+                  {payload.strTripType === "O" ? "One-way" : "Round-trip"})
+                </h3>
+                <p>
+                  Passengers (A/C/I/O): {payload.iAdult} / {payload.iChild} /{" "}
+                  {payload.iInfant} / {payload.iOther} | Status: {status}
+                </p>
+
+                {status === "pending" && <em>Loading...</em>}
+
+                {status === "error" && (
+                  <p className="error">Error: {errorMessage}</p>
+                )}
+
+                {status === "success" && (
+                  <>
+                    {/* TARA_AVAILABILITY Table */}
+                    {response.TARA_AVAILABILITY &&
+                      response.TARA_AVAILABILITY.length > 0 && (
+                        <>
+                          <h4>TARA Availability</h4>
+                          <table className="availability-table">
+                            <thead>
+                              <tr>
+                                <th>Airline</th>
+                                <th>Flight No</th>
+                                <th>Date</th>
+                                <th>Departure</th>
+                                <th>Dep. Time</th>
+                                <th>Arrival</th>
+                                <th>Arr. Time</th>
+                                <th>Adult Fare</th>
+                                <th>Currency</th>
+                                <th>Baggage (kg)</th>
+                                <th>Refundable</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {response.TARA_AVAILABILITY.map(
+                                (flight: any, idx: number) => (
+                                  <tr key={`tara-${idx}`}>
+                                    <td>{flight.airline}</td>
+                                    <td>{flight.flightNo}</td>
+                                    <td>{flight.flightDate}</td>
+                                    <td>{flight.departure}</td>
+                                    <td>{flight.departureTime}</td>
+                                    <td>{flight.arrival}</td>
+                                    <td>{flight.arrivalTime}</td>
+                                    <td>{flight.adultFare.toFixed(2)}</td>
+                                    <td>{flight.currency}</td>
+                                    <td>{flight.freeBaggage}</td>
+                                    <td>{flight.refundable === "T" ? "Yes" : "No"}</td>
+                                  </tr>
+                                )
+                              )}
+                            </tbody>
+                          </table>
+                        </>
+                      )}
+
+                    {/* YETI_AVAILABILITY Table */}
+                    {response.YETI_AVAILABILITY &&
+                      response.YETI_AVAILABILITY.length > 0 && (
+                        <>
+                          <h4>YETI Availability</h4>
+                          <table className="availability-table">
+                            <thead>
+                              <tr>
+                                <th>Airline</th>
+                                <th>Flight No</th>
+                                <th>Departure</th>
+                                <th>Dep. Time</th>
+                                <th>Arrival</th>
+                                <th>Arr. Time</th>
+                                <th>Fare</th>
+                                <th>Currency</th>
+                                <th>Booking Class</th>
+                                <th>Flight Status</th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              {response.YETI_AVAILABILITY.map(
+                                (flight: any, idx: number) => (
+                                  <tr key={`yeti-${idx}`}>
+                                    <td>{flight.airline}</td>
+                                    <td>{flight.flightNumber}</td>
+                                    <td>{flight.originName}</td>
+                                    <td>{formatTime(flight.departureTime)}</td>
+                                    <td>{flight.destinationName}</td>
+                                    <td>{formatTime(flight.arrivalTime)}</td>
+                                    <td>{flight.totalAdultFare.toFixed(2)}</td>
+                                    <td>{flight.currency}</td>
+                                    <td>{flight.bookingClass}</td>
+                                    <td>{flight.flightStatus}</td>
+                                  </tr>
+                                )
+                              )}
+                            </tbody>
+                          </table>
+                        </>
+                      )}
+                  </>
+                )}
+              </div>
+            )
+          )
         )}
       </section>
     </div>
