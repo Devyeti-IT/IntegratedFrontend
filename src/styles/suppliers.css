@@ -54,18 +54,18 @@
 }
 
 .bulk-actions button:nth-child(1) {
-  background-color: #e53935;
-  color: white;
+  /* background-color: #e53935; */
+  color: rgb(11, 11, 11);
 }
 
 .bulk-actions button:nth-child(2) {
-  background-color: #43a047;
-  color: white;
+  /* background-color: #43a047; */
+  color: rgb(11, 10, 10);
 }
 
 .bulk-actions button:nth-child(3) {
-  background-color: #fb8c00;
-  color: white;
+  /* background-color: #fb8c00; */
+  color: rgb(11, 10, 10);
 }
 
 .bulk-actions button:hover:not(:disabled) {
@@ -110,15 +110,7 @@ tbody tr:hover {
   border-radius: 14px;
   font-size: 13px;
   font-weight: 600;
-  color: white;
-}
-
-.status.active {
-  background-color: #4caf50;
-}
-
-.status.inactive {
-  background-color: #f44336;
+  color: rgb(15, 14, 14);
 }
 
 /* === Action Buttons === */

@@ -11,6 +11,7 @@ type SupplierTableProps = {
   suppliers: Supplier[];
   selectedSuppliers: number[];
   onSelectionChange: (selected: number[]) => void;
+  onDeleteUser?: (id: number) => void;
   pageSize?: number;
 };
 
@@ -18,6 +19,7 @@ const SupplierTable: React.FC<SupplierTableProps> = ({
   suppliers,
   selectedSuppliers,
   onSelectionChange,
+  onDeleteUser,
   pageSize = 5,
 }) => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -60,6 +62,13 @@ const SupplierTable: React.FC<SupplierTableProps> = ({
 
   const isSelected = (id: number) => selectedSuppliers.includes(id);
 
+  // Confirm before delete
+  const handleDeleteClick = (id: number, name: string) => {
+    if (window.confirm(`Are you sure you want to delete supplier "${name}"?`)) {
+      onDeleteUser && onDeleteUser(id);
+    }
+  };
+
   return (
     <section className="user-list">
       <table className="supplier-table" role="table" aria-label="Supplier Table">
@@ -98,7 +107,7 @@ const SupplierTable: React.FC<SupplierTableProps> = ({
                     aria-label={`Select supplier ${supplier.name}`}
                   />
                 </td>
-                <td>{supplier.id}</td> {/* ✅ Now correctly rendering ID */}
+                <td>{supplier.id}</td>
                 <td>{supplier.name}</td>
                 <td>{supplier.email}</td>
                 <td>
@@ -106,12 +115,22 @@ const SupplierTable: React.FC<SupplierTableProps> = ({
                     className={`status ${supplier.status.toLowerCase()}`}
                     aria-label={supplier.status}
                   >
-                    {supplier.status === 'Active' ? '🟢' : '🔴'} {supplier.status}
+                    {supplier.status}
                   </span>
                 </td>
                 <td>
-                  <button className="icon-button edit" aria-label="Edit supplier">
+                  <button
+                    className="icon-button edit"
+                    aria-label={`Edit supplier ${supplier.name}`}
+                  >
                     <i className="fas fa-edit" />
+                  </button>
+                  <button
+                    onClick={() => handleDeleteClick(supplier.id, supplier.name)}
+                    className="icon-button delete"
+                    aria-label={`Delete supplier ${supplier.name}`}
+                  >
+                    <i className="fas fa-trash" />
                   </button>
                 </td>
               </tr>

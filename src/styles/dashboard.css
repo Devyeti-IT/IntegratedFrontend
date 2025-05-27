@@ -17,6 +17,8 @@
   padding: 1rem;
   transition: width 0.3s ease;
   flex-shrink: 0;
+  overflow-y: auto;
+  scrollbar-width: none;
 }
 
 .sidebar.collapsed {

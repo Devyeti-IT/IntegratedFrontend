@@ -12,7 +12,7 @@ const Header: React.FC = () => {
 
     if (path === "/dashboard") return "Dashboard Overview";
     if (path === "/dashboard/suppliers") return "Supplier Management";
-    if (path === "/users") return "User Management";
+    if (path === "/dashboard/users") return "User Management";
     if (path === "/agencies") return "Agency Management";
     if (path == "/dashboard/apitest") return "Test API";
     return "Admin Panel";
