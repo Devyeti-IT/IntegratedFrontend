@@ -9,7 +9,7 @@ interface NavLink {
 
 interface NavSection {
   title: string;
-  icon: string; // new: for collapsed view
+  icon: string;
   links: NavLink[];
 }
 
@@ -17,7 +17,9 @@ const navSections: NavSection[] = [
   {
     title: "MAIN",
     icon: "fas fa-home",
-    links: [{ href: "/dashboard", icon: "fas fa-tachometer-alt", label: "Dashboard" }],
+    links: [
+      { href: "/dashboard", icon: "fas fa-tachometer-alt", label: "Dashboard" },
+    ],
   },
   {
     title: "MANAGEMENT",
@@ -25,10 +27,10 @@ const navSections: NavSection[] = [
     links: [
       { href: "/dashboard/suppliers", icon: "fas fa-link", label: "Suppliers" },
       { href: "/users", icon: "fas fa-users", label: "Users" },
-      { href: "/agencies", icon: "fas fa-building", label: "Agencies" },
+      { href: "/dashboard/agencies", icon: "fas fa-building", label: "Agencies" }, // ✅ Fixed route
       { href: "/dashboard/apitest", icon: "fas fa-plug", label: "Test API" },
       { href: "#", icon: "fas fa-plane", label: "Flights" },
-      { href: "#", icon: "fas fa-dollar-sign", label: "Fare Override" }, // changed to money-bill
+      { href: "#", icon: "fas fa-dollar-sign", label: "Fare Override" },
       { href: "#", icon: "fas fa-ticket-alt", label: "Booking" },
       { href: "#", icon: "fas fa-hand-holding-usd", label: "Payments" },
       { href: "#", icon: "fas fa-chart-pie", label: "Revenue Analytics" },
