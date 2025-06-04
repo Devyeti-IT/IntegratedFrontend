@@ -1,0 +1,34 @@
+Updated all related and relavant + boking dummy data and components
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+#
+# On branch updatedbranch
+# Changes to be committed:
+#	modified:   index.html
+#	modified:   src/App.tsx
+#	new file:   src/api/apiService.ts
+#	new file:   src/components/AddAgencyModal.tsx
+#	modified:   src/components/AddSupplierModal.tsx
+#	modified:   src/components/AddUserModal.tsx
+#	new file:   src/components/AgencyControls.tsx
+#	new file:   src/components/AgencyTable.tsx
+#	new file:   src/components/BookingConfirmation.tsx
+#	new file:   src/components/BookingForm.tsx
+#	modified:   src/components/BulkActions.tsx
+#	new file:   src/components/FlightResults.tsx
+#	new file:   src/components/FlightSearchForm.tsx
+#	modified:   src/components/Header.tsx
+#	new file:   src/components/SelectAgenciesModal.tsx
+#	new file:   src/components/ServiceInitializer.tsx
+#	modified:   src/components/Sidebar.tsx
+#	new file:   src/context/AgencyContext.tsx
+#	new file:   src/context/SupplierContext.tsx
+#	modified:   src/main.tsx
+#	new file:   src/pages/AgencyPage.tsx
+#	new file:   src/pages/BookingPage.tsx
+#	modified:   src/pages/SuppliersPage.tsx
+#	modified:   src/pages/UsersPage.tsx
+#	new file:   src/styles/agency.css
+#	new file:   src/styles/booking.css
+#	modified:   src/styles/suppliers.css
+#
