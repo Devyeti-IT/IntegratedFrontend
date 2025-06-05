@@ -1,12 +1,11 @@
-import React from 'react';
+import React from "react";
 
-const BookingConfirmation: React.FC<{ bookingNumber: string }> = ({ bookingNumber }) => {
+export default function BookingConfirmation({ details }: { details: any }) {
   return (
-    <div>
+    <div className="booking-confirmation">
       <h2>Booking Confirmed!</h2>
-      <p>Your booking number is: <strong>{bookingNumber}</strong></p>
+      <p>Confirmation ID: {details?.confirmationId || "MOCK-ID-12345"}</p>
+      <p>Thank you for booking with us.</p>
     </div>
   );
-};
-
-export default BookingConfirmation;
+}
