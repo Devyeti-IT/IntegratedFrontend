@@ -11,7 +11,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ flight, onBook }) => {
     FirstName: "",
     LastName: "",
     Gender: "M",
-    Nationality: "IN",
+    Nationality: "NP",
     Email: "",
     PhoneMobile: "",
     City: "",
@@ -26,6 +26,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ flight, onBook }) => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    console.log("BookingForm handleSubmit payload:", formData);
     const payload = {
       ...formData,
       PassengerType: "ADULT",
@@ -63,7 +64,7 @@ const BookingForm: React.FC<BookingFormProps> = ({ flight, onBook }) => {
           <strong>To:</strong> {flight.to || flight.destinationCode}
         </p>
         <p>
-          <strong>Price:</strong> ${flight.price || "N/A"}
+          <strong>Price:</strong> {flight.price || "N/A"}
         </p>
       </div>
 
